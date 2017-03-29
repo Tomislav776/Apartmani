@@ -2,27 +2,30 @@
 
 namespace App\Http\Controllers;
 
+use App\Apartment;
+use App\ApartmentFilters;
+use App\County;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 
 class HomeController extends Controller
 {
     /**
-     * Create a new controller instance.
-     *
-     * @return void
-     */
-    public function __construct()
-    {
-        $this->middleware('auth');
-    }
-
-    /**
      * Show the application dashboard.
      *
+     * @param  ApartmentFilters $filters
      * @return \Illuminate\Http\Response
      */
-    public function getHome()
+    public function index(ApartmentFilters $filters)
     {
-        return view('home');
+        if(empty($filters->filters())) {
+            $apartments = Apartment::orderBy('created_at', 'desc')->paginate(12);
+        } else {
+            $apartments = Apartment::filter($filters);
+        }
+
+        $counties = County::all();
+
+        return view('home', compact('apartments', 'counties'));
     }
 }

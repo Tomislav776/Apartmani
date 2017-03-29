@@ -11,30 +11,35 @@
 |
 */
 
-
-Route::get('/', 'HomeController@getHome');
 Auth::routes();
 
-Route::get('/home', 'HomeController@index');
+Route::get('/', 'HomeController@index')->name('index');
+
+Route::group(['middleware' => ['auth']], function () {
+    Route::get('/apartments/create', 'ApartmentController@create')->name('apartments.create');
+    Route::post('/apartments/store', 'ApartmentController@store')->name('apartments.store');
+});
+
+//Route::get('/admin', 'AdminController@index')->name('index');
+
+Route::get('/admin', ['uses' => 'AdminController@index',]);
+Route::get('/admin/moderator', ['as' => 'admin.moderator', 'uses' => 'AdminController@getModeratorData']);
+Route::get('/admin/{apartment}', ['as' => 'admin.moderator.apartment', 'uses' => 'AdminController@showApartment']);
 
 
-/*
-  public function auth()
-    {
-        // Authentication Routes...
-        $this->get('login', 'Auth\LoginController@showLoginForm')->name('login');
-        $this->post('login', 'Auth\LoginController@login');
-        $this->post('logout', 'Auth\LoginController@logout')->name('logout');
 
-        // Registration Routes...
-        $this->get('register', 'Auth\RegisterController@showRegistrationForm')->name('register');
-        $this->post('register', 'Auth\RegisterController@register');
+//Route::get('/admin', 'AdminController@getAllApartments')->name('index');
 
-        // Password Reset Routes...
-        $this->get('password/reset', 'Auth\ForgotPasswordController@showLinkRequestForm')->name('password.request');
-        $this->post('password/email', 'Auth\ForgotPasswordController@sendResetLinkEmail')->name('password.email');
-        $this->get('password/reset/{token}', 'Auth\ResetPasswordController@showResetForm')->name('password.reset');
-        $this->post('password/reset', 'Auth\ResetPasswordController@reset');
-    }
 
- */
+
+
+
+
+
+
+
+
+
+
+
+Route::get('/test', ['as' => 'test', 'uses' => 'AdminController@test']);

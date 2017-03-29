@@ -3,11 +3,13 @@
 namespace App;
 
 use Illuminate\Notifications\Notifiable;
+use Cviebrock\EloquentSluggable\Sluggable;
+use Cviebrock\EloquentSluggable\SluggableScopeHelpers;
 use Illuminate\Foundation\Auth\User as Authenticatable;
 
 class User extends Authenticatable
 {
-    use Notifiable;
+    use Notifiable, Sluggable, SluggableScopeHelpers;
 
     /**
      * The attributes that are mass assignable.
@@ -26,4 +28,35 @@ class User extends Authenticatable
     protected $hidden = [
         'password', 'remember_token',
     ];
+
+    /**
+     * Return the sluggable configuration array for this model.
+     *
+     * @return array
+     */
+    public function sluggable()
+    {
+        return [
+            'slug' => [
+                'source' => 'name'
+            ]
+        ];
+    }
+
+    /**
+     * Get the apartments of the user.
+     */
+    public function apartments()
+    {
+        return $this->hasMany(Apartment::class);
+    }
+
+    /**
+     * Get the apartments of the user.
+     */
+    public function role()
+    {
+        return $this->belongsTo(Role::class);
+    }
+
 }
