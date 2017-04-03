@@ -3,9 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Apartment;
+use App\Mail\ApproveAd;
+use App\User;
 use Yajra\Datatables\Facades\Datatables;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Mail;
 
 class AdminController extends Controller
 {
@@ -43,7 +46,24 @@ class AdminController extends Controller
         return view('admin.apartment', ['apartment' => $apartment ]);
     }
 
+    public function getApartmentResponse(Request $request, $slug){
 
+        $apartment = Apartment::where('slug', '=', $slug)->first();
+
+        if ($request->button == "Dozvoli"){
+            $apartment->validation = '1';
+            $apartment->save();
+
+            Mail::to($apartment->user->email)->send(new ApproveAd($apartment->user, "Vaš oglas je prošao validaciju."));
+        } else {
+            $apartment->validation = '-1';
+            $apartment->save();
+            Mail::to($apartment->user->email)->send(new ApproveAd($apartment->user, $request->message));
+        }
+
+        return redirect('/admin')->with('success', 'Oglas je validiran!');
+
+    }
 
 
     public function test(){

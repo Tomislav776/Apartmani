@@ -26,6 +26,8 @@ Route::get('/admin', ['uses' => 'AdminController@index',]);
 Route::get('/admin/moderator', ['as' => 'admin.moderator', 'uses' => 'AdminController@getModeratorData']);
 Route::get('/admin/{apartment}', ['as' => 'admin.moderator.apartment', 'uses' => 'AdminController@showApartment']);
 
+Route::post('/admin/{apartment}/response', 'AdminController@getApartmentResponse');
+
 
 
 //Route::get('/admin', 'AdminController@getAllApartments')->name('index');
