@@ -50,6 +50,7 @@ class AdminController extends Controller
 
         $apartment = Apartment::where('slug', '=', $slug)->first();
 
+
         if ($request->button == "Dozvoli"){
             $apartment->validation = '1';
             $apartment->save();

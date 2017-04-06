@@ -1,7 +1,7 @@
 @extends('layouts.app')
 
 @section('css')
-    <link rel="stylesheet" type="text/css" href="{{ asset('assets/vendors/datatables/css/dataTables.bootstrap.css') }}" />
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/dataTables.bootstrap.css') }}" />
 @endsection
 
 @section('content')
@@ -36,15 +36,8 @@
 
 @section('scripts')
 
-
-    <!-- jQuery -->
-    <script src="//code.jquery.com/jquery.js"></script>
-
-    <!-- DataTables -->
-    <script src="//cdn.datatables.net/1.10.7/js/jquery.dataTables.min.js"></script>
-
-    <!-- Bootstrap JavaScript -->
-    <script src="//netdna.bootstrapcdn.com/bootstrap/3.2.0/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="{{ asset('js/jquery.dataTables.js') }}" ></script>
+    <script type="text/javascript" src="{{ asset('js/dataTables.bootstrap.js') }}" ></script>
 
 <script>
     $(function() {
