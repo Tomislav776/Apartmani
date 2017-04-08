@@ -22,11 +22,19 @@ Route::group(['middleware' => ['auth']], function () {
 
 //Route::get('/admin', 'AdminController@index')->name('index');
 
-Route::get('/admin', ['uses' => 'AdminController@index',]);
+Route::get('/admin', ['as' => 'admin', 'uses' => 'AdminController@index',]);
 Route::get('/admin/moderator', ['as' => 'admin.moderator', 'uses' => 'AdminController@getModeratorData']);
-Route::get('/admin/{apartment}', ['as' => 'admin.moderator.apartment', 'uses' => 'AdminController@showApartment']);
 
+Route::get('/admin/users', ['as' => 'admin.users', 'uses' => 'AdminController@getUsers']);
+Route::get('/admin/usersDatatables', ['as' => 'admin.usersDatatables', 'uses' => 'AdminController@getUsersData']);
+
+Route::get('/admin/users/{user}', ['as' => 'admin.users.user', 'uses' => 'AdminController@showUser']);
+Route::post('/admin/users/{user}/update', ['uses' => 'AdminController@updateUser']);
+
+
+Route::get('/admin/{apartment}', ['as' => 'admin.moderator.apartment', 'uses' => 'AdminController@showApartment']);
 Route::post('/admin/{apartment}/response', 'AdminController@getApartmentResponse');
+
 
 
 

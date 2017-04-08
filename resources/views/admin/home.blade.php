@@ -6,28 +6,35 @@
 
 @section('content')
 
+<div class="row">
 
-<h3>Moderator</h3>
+@include('partials.navigation-admin')
+
+    <div class="col-md-8">
+
+        <h3>Moderator</h3>
+
+        <div id="users-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer ">
+
+            <div class="panel-body flip-scroll">
+                <table class="table table-bordered table-hover flip-content" id="users-table">
+                    <thead>
+                    <tr class="filters">
+                        <th>Id</th>
+                        <th>Ime</th>
+                        <th>Opis</th>
+                        <th>Datum</th>
+                        <th>Opcije</th>
+                    </tr>
+                    </thead>
+                    <tbody>
 
 
-<div id="users-table_wrapper" class="dataTables_wrapper form-inline dt-bootstrap no-footer">
+                    </tbody>
+                </table>
+            </div>
+        </div>
 
-    <div class="panel-body flip-scroll">
-        <table class="table table-bordered table-hover flip-content" id="moderator-table">
-            <thead>
-            <tr class="filters">
-                <th>Id</th>
-                <th>Ime</th>
-                <th>Opis</th>
-                <th>Datum</th>
-                <th>Opcije</th>
-            </tr>
-            </thead>
-            <tbody>
-
-
-            </tbody>
-        </table>
     </div>
 </div>
 
@@ -41,7 +48,7 @@
 
 <script>
     $(function() {
-        $('#moderator-table').DataTable({
+        $('#users-table').DataTable({
             processing: true,
             serverSide: true,
             ajax: '{{route ('admin.moderator')}}',

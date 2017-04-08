@@ -18,3 +18,4 @@ Route::middleware('auth:api')->get('/user', function (Request $request) {
 });
 
 Route::get('/admin/moderator', ['as' => 'admin.moderator', 'uses' => 'AdminController@getModeratorData']);
+Route::get('/admin/usersDatatables', ['as' => 'admin.usersDatatables', 'uses' => 'AdminController@getUsersData']);

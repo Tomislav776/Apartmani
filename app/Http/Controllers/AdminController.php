@@ -24,10 +24,6 @@ class AdminController extends Controller
         return view('admin.home');
     }
 
-    public function getAddEditRemoveColumn()
-    {
-        return view('admin.home');
-    }
 
     public function getModeratorData()
     {
@@ -63,6 +59,43 @@ class AdminController extends Controller
         }
 
         return redirect('/admin')->with('success', 'Oglas je validiran!');
+
+    }
+
+
+    public function getUsers()
+    {
+        return view('admin.users');
+    }
+
+    public function getUsersData()
+    {
+        $users = User::with('role')->get();
+
+        return Datatables::of($users)
+            ->addColumn('action', function ($users) {
+                return '<a href="users/'.$users->slug.'" class="btn btn-xs btn-primary"> Prikaži </a>';
+            })
+
+            ->make(true);
+    }
+
+    public function showUser($slug = null){
+        $user = User::where('slug', '=', $slug)->first();
+        return view('admin.user-show', ['user' => $user ]);
+    }
+
+    public function updateUser(Request $request, $slug){
+
+
+        $user = User::where('slug', '=', $slug)->first();
+
+        $user->role_id = $request->role;
+        $user->email = $request->email;
+
+        $user->save();
+
+        return redirect('/admin/users');
 
     }
 
