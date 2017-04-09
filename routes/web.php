@@ -31,11 +31,14 @@ Route::get('/admin/usersDatatables', ['as' => 'admin.usersDatatables', 'uses' =>
 Route::get('/admin/users/{user}', ['as' => 'admin.users.user', 'uses' => 'AdminController@showUser']);
 Route::post('/admin/users/{user}/update', ['uses' => 'AdminController@updateUser']);
 
+Route::get('/admin/users/{user}/{apartments}/edit', ['as' => 'admin.users.user.apartment.edit', 'uses' => 'AdminController@showUsersApartment']);
+Route::post('/admin/users/{user}/{apartments}/edit', ['uses' => 'AdminController@editUsersApartment']);
+
 
 Route::get('/admin/{apartment}', ['as' => 'admin.moderator.apartment', 'uses' => 'AdminController@showApartment']);
 Route::post('/admin/{apartment}/response', 'AdminController@getApartmentResponse');
 
-
+Route::get('/admin/usersDatatables/{user}/active-ads/{adType}', ['as' => 'admin.usersDatatables.activeAds', 'uses' => 'AdminController@getUsersActiveAds']);
 
 
 //Route::get('/admin', 'AdminController@getAllApartments')->name('index');
